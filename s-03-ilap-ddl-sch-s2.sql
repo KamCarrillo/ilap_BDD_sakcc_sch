@@ -10,13 +10,13 @@ PROMPT Borrando tablas del nodo Este (sch_s2) si existen...
 BEGIN
   -- Servicio
   BEGIN
-    EXECUTE IMMEDIATE 'DROP TABLE servicio_lap_f2_sch_s2 CASCADE CONSTRAINTS';
+    EXECUTE IMMEDIATE 'DROP TABLE servicio_laptop_f2_sch_s2 CASCADE CONSTRAINTS';
   EXCEPTION WHEN OTHERS THEN IF SQLCODE != -942 THEN RAISE; END IF;
   END;
 
   -- Histórico
   BEGIN
-    EXECUTE IMMEDIATE 'DROP TABLE hist_status_f2_sch_s2 CASCADE CONSTRAINTS';
+    EXECUTE IMMEDIATE 'DROP TABLE historico_status_laptop_f2_sch_s2 CASCADE CONSTRAINTS';
   EXCEPTION WHEN OTHERS THEN IF SQLCODE != -942 THEN RAISE; END IF;
   END;
 
@@ -179,13 +179,13 @@ CREATE TABLE laptop_f2_sch_s2 (
 -- 5. Fragmento HIST_STATUS_F2_SCH_S2 (histórico reciente) 
 ------------------------------------------------------------------------------
 
-CREATE TABLE hist_status_f2_sch_s2 (
-  hist_status_id    NUMBER(10)    NOT NULL,
+CREATE TABLE historico_status_laptop_f2_sch_s2 (
+  historico_status_id    NUMBER(10)    NOT NULL,
   laptop_id         NUMBER(10)    NOT NULL,
   status_laptop_id  NUMBER(10)    NOT NULL,
   fecha_status      DATE          NOT NULL,
-  CONSTRAINT pk_hist_status_f2_sch_s2 PRIMARY KEY (hist_status_id),
-  CONSTRAINT fk_hist_f2_status
+  CONSTRAINT pk_historico_status_f2_sch_s2 PRIMARY KEY (historico_status_id),
+  CONSTRAINT fk_historico_f2_status
     FOREIGN KEY (status_laptop_id)
     REFERENCES status_laptop (status_laptop_id)
 );
@@ -194,16 +194,16 @@ CREATE TABLE hist_status_f2_sch_s2 (
 -- 6. Fragmento derivado SERVICIO_LAP_F2_SCH_S2 
 ------------------------------------------------------------------------------
 
-CREATE TABLE servicio_lap_f2_sch_s2 (
+CREATE TABLE servicio_laptop_f2_sch_s2 (
   num_servicio  NUMBER(10)      NOT NULL,
   laptop_id     NUMBER(10)      NOT NULL,
   importe       NUMBER(8,2)     NOT NULL,
   diagnostico   VARCHAR2(2000)  NOT NULL,
   factura       BLOB,
   sucursal_id   NUMBER(10)      NOT NULL,
-  CONSTRAINT pk_servicio_lap_f2_sch_s2
+  CONSTRAINT pk_servicio_laptop_f2_sch_s2
     PRIMARY KEY (num_servicio, laptop_id),
-  CONSTRAINT fk_serv_lap_f2_suc_taller_f2
+  CONSTRAINT fk_serv_laptop_f2_suc_taller_f2
     FOREIGN KEY (sucursal_id)
     REFERENCES sucursal_taller_f2_sch_s2 (sucursal_id)
 );

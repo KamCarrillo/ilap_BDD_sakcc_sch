@@ -39,22 +39,22 @@ create or replace synonym laptop_f4 for laptop_f4_sakcc_s2@sakccbdd_s2.fi.unam;
 -------------------------------------------------------------------------------
 -- LAPTOP_INV (f1 y f2)
 -------------------------------------------------------------------------------
-create or replace synonym laptop_inv_f1 for laptop_inv_f1_sch_s1@schbdd_s1.fi.unam;
-create or replace synonym laptop_inv_f2 for laptop_inv_f2_sakcc_s1@sakccbdd_s1.fi.unam;
+create or replace synonym laptop_inventario_f1 for laptop_inventario_f1_sch_s1@schbdd_s1.fi.unam;
+create or replace synonym laptop_inventario_f2 for laptop_inventario_f2_sakcc_s1@sakccbdd_s1.fi.unam;
 
 -------------------------------------------------------------------------------
 -- HISTORICO_STATUS
 -------------------------------------------------------------------------------
-create or replace synonym hist_status_f1 for hist_status_f1_sch_s1@schbdd_s1.fi.unam;
-create or replace synonym hist_status_f2 for hist_status_f2_sch_s2;
+create or replace synonym historico_status_laptop_f1 for historico_status_laptop_f1_sch_s1@schbdd_s1.fi.unam;
+create or replace synonym historico_status_laptop_f2 for historico_status_laptop_f2_sch_s2;
 
 -------------------------------------------------------------------------------
 -- SERVICIO_LAPTOP
 -------------------------------------------------------------------------------
-create or replace synonym servicio_lap_f1 for servicio_lap_f1_sch_s1@schbdd_s1.fi.unam;
-create or replace synonym servicio_lap_f2 for servicio_lap_f2_sch_s2;
-create or replace synonym servicio_lap_f3 for servicio_lap_f3_sakcc_s1@sakccbdd_s1.fi.unam;
-create or replace synonym servicio_lap_f4 for servicio_lap_f4_sakcc_s2@sakccbdd_s2.fi.unam;
+create or replace synonym servicio_laptop_f1 for servicio_laptop_f1_sch_s1@schbdd_s1.fi.unam;
+create or replace synonym servicio_laptop_f2 for servicio_laptop_f2_sch_s2;
+create or replace synonym servicio_laptop_f3 for servicio_laptop_f3_sakcc_s1@sakccbdd_s1.fi.unam;
+create or replace synonym servicio_laptop_f4 for servicio_laptop_f4_sakcc_s2@sakccbdd_s2.fi.unam;
 
 -------------------------------------------------------------------------------
 -- TABLAS REPLICADAS (tipo_*)

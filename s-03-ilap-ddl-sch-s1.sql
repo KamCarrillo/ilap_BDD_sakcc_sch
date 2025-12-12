@@ -8,19 +8,19 @@ PROMPT Borrando tablas del nodo Norte (sch_s1) si existen...
 BEGIN
   -- Servicio
   BEGIN
-    EXECUTE IMMEDIATE 'DROP TABLE servicio_lap_f1_sch_s1 CASCADE CONSTRAINTS';
+    EXECUTE IMMEDIATE 'DROP TABLE servicio_laptop_f1_sch_s1 CASCADE CONSTRAINTS';
   EXCEPTION WHEN OTHERS THEN IF SQLCODE != -942 THEN RAISE; END IF;
   END;
 
   -- Histórico de estatus
   BEGIN
-    EXECUTE IMMEDIATE 'DROP TABLE hist_status_f1_sch_s1 CASCADE CONSTRAINTS';
+    EXECUTE IMMEDIATE 'DROP TABLE historico_status_laptop_f1_sch_s1 CASCADE CONSTRAINTS';
   EXCEPTION WHEN OTHERS THEN IF SQLCODE != -942 THEN RAISE; END IF;
   END;
 
   -- Inventario vertical
   BEGIN
-    EXECUTE IMMEDIATE 'DROP TABLE laptop_inv_f1_sch_s1 CASCADE CONSTRAINTS';
+    EXECUTE IMMEDIATE 'DROP TABLE laptop_inventario_f1_sch_s1 CASCADE CONSTRAINTS';
   EXCEPTION WHEN OTHERS THEN IF SQLCODE != -942 THEN RAISE; END IF;
   END;
 
@@ -187,13 +187,13 @@ CREATE TABLE laptop_f1_sch_s1 (
 -------------------------------------------------------------------------------
 -- 5. LAPTOP_INV_F1_SCH_S1
 -------------------------------------------------------------------------------
-CREATE TABLE laptop_inv_f1_sch_s1 (
+CREATE TABLE laptop_inventario_f1_sch_s1 (
   laptop_id      NUMBER(10)    NOT NULL,
   status_laptop_id  NUMBER(10)    NOT NULL,
   fecha_status   DATE          NOT NULL,
   sucursal_id    NUMBER(10)    NOT NULL,
-  CONSTRAINT pk_laptop_inv_f1_sch_s1 PRIMARY KEY (laptop_id),
-  CONSTRAINT fk_lap_inv_f1_status
+  CONSTRAINT pk_laptop_inventario_f1_sch_s1 PRIMARY KEY (laptop_id),
+  CONSTRAINT fk_lap_inventario_f1_status
     FOREIGN KEY (status_laptop_id)
     REFERENCES status_laptop (status_laptop_id)
 );
@@ -201,13 +201,13 @@ CREATE TABLE laptop_inv_f1_sch_s1 (
 -------------------------------------------------------------------------------
 -- 6. HIST_STATUS_F1_SCH_S1
 -------------------------------------------------------------------------------
-CREATE TABLE hist_status_f1_sch_s1 (
+CREATE TABLE historico_status_laptop_f1_sch_s1 (
   historico_status_laptop_id    NUMBER(10)    NOT NULL,
   laptop_id         NUMBER(10)    NOT NULL,
   status_laptop_id  NUMBER(10)    NOT NULL,
   fecha_status      DATE          NOT NULL,
-  CONSTRAINT pk_hist_status_f1_sch_s1 PRIMARY KEY (historico_status_laptop_id),
-  CONSTRAINT fk_hist_f1_status
+  CONSTRAINT pk_historico_status_f1_sch_s1 PRIMARY KEY (historico_status_laptop_id),
+  CONSTRAINT fk_historico_f1_status
     FOREIGN KEY (status_laptop_id)
     REFERENCES status_laptop (status_laptop_id)
 );
@@ -215,16 +215,16 @@ CREATE TABLE hist_status_f1_sch_s1 (
 -------------------------------------------------------------------------------
 -- 7. SERVICIO_LAP_F1_SCH_S1
 -------------------------------------------------------------------------------
-CREATE TABLE servicio_lap_f1_sch_s1 (
+CREATE TABLE servicio_laptop_f1_sch_s1 (
   num_servicio  NUMBER(10)      NOT NULL,
   laptop_id     NUMBER(10)      NOT NULL,
   importe       NUMBER(8,2)     NOT NULL,
   diagnostico   VARCHAR2(2000)  NOT NULL,
   factura       BLOB,
   sucursal_id   NUMBER(10)      NOT NULL,
-  CONSTRAINT pk_servicio_lap_f1_sch_s1
+  CONSTRAINT pk_servicio_laptop_f1_sch_s1
     PRIMARY KEY (num_servicio, laptop_id),
-  CONSTRAINT fk_serv_lap_f1_suc_taller_f1
+  CONSTRAINT fk_serv_laptop_f1_suc_taller_f1
     FOREIGN KEY (sucursal_id)
     REFERENCES sucursal_taller_f1_sch_s1 (sucursal_id)
 );
