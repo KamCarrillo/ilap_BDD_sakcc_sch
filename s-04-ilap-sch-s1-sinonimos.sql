@@ -36,6 +36,7 @@ create or replace synonym laptop_f2 for laptop_f2_sch_s2@schbdd_s2.fi.unam;
 create or replace synonym laptop_f3 for laptop_f3_sakcc_s1@sakccbdd_s1.fi.unam;
 create or replace synonym laptop_f4 for laptop_f4_sakcc_s2@sakccbdd_s2.fi.unam;
 
+create or replace synonym laptop_foto_f4 for laptop_foto_f4_sakcc_s2@sakccbdd_s2.fi.unam;
 -------------------------------------------------------------------------------
 -- LAPTOP_INV (vertical, 2 fragmentos)
 -------------------------------------------------------------------------------
