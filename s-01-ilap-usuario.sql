@@ -23,4 +23,14 @@ GRANT CREATE SYNONYM TO ilap_bdd;
 
 GRANT CREATE DATABASE LINK TO ilap_bdd;
 
+grant create session to ilap_bdd;
+grant resource to ilap_bdd;
+
+-- Ya tenías: create table, view, synonym, procedure, database link, etc.
+-- Agrega también:
+grant create directory to ilap_bdd;
+-- o si sigues el ejemplo literal de la guía:
+-- grant create any directory to ilap_bdd;
+
+
 PROMPT Permisos asignados correctamente.
