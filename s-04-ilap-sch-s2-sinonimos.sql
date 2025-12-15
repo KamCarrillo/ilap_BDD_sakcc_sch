@@ -86,3 +86,9 @@ create or replace synonym tipo_monitor_r4 for tipo_monitor_r_sakcc_s2@sakccbdd_s
 
 -- status_laptop SIN sinónimos (copia manual).
 
+-------------------------------------------------------------------------------
+-- LAPTOP_FOTO (BLOB vertical, almacenado en SAKCC S2)
+-------------------------------------------------------------------------------
+create or replace synonym laptop_foto_f1
+  for laptop_foto_f1_sakcc_s2@sakccbdd_s2.fi.unam;
+

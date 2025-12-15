@@ -91,3 +91,5 @@ create or replace synonym tipo_monitor_r4 for tipo_monitor_r_sakcc_s2@sakccbdd_s
 
 -- status_laptop NO requiere sinónimos (copia manual en los 4 nodos).
 
+create or replace synonym laptop_foto_f1
+  for laptop_foto_f1_sakcc_s2@sakccbdd_s2.fi.unam;

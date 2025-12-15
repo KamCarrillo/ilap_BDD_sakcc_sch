@@ -89,17 +89,17 @@ CREATE TABLE tipo_procesador_r_sch_s2 (
 );
 
 CREATE TABLE tipo_tarjeta_video_r_sch_s2 (
-  tipo_tarjeta_id   NUMBER(10)    NOT NULL,
+  tipo_tarjeta_video_id   NUMBER(10)    NOT NULL,
   clave             VARCHAR2(40)  NOT NULL,
   descripcion       VARCHAR2(400) NOT NULL,
-  CONSTRAINT pk_tipo_tarjeta_video_r_sch_s2 PRIMARY KEY (tipo_tarjeta_id)
+  CONSTRAINT pk_tipo_tarjeta_video_r_sch_s2 PRIMARY KEY (tipo_tarjeta_video_id)
 );
 
 CREATE TABLE tipo_almacenamiento_r_sch_s2 (
-  tipo_alm_id       NUMBER(10)    NOT NULL,
+  tipo_almacenamiento_id       NUMBER(10)    NOT NULL,
   clave             VARCHAR2(40)  NOT NULL,
   descripcion       VARCHAR2(400) NOT NULL,
-  CONSTRAINT pk_tipo_almacenamiento_r_sch_s2 PRIMARY KEY (tipo_alm_id)
+  CONSTRAINT pk_tipo_almacenamiento_r_sch_s2 PRIMARY KEY (tipo_almacenamiento_id)
 );
 
 CREATE TABLE tipo_monitor_r_sch_s2 (
@@ -163,13 +163,13 @@ CREATE TABLE laptop_f2_sch_s2 (
   CONSTRAINT uq_laptop_f2_sch_s2_num_serie UNIQUE (num_serie),
   CONSTRAINT fk_lap_f2_tv_sch_s2
     FOREIGN KEY (tipo_tarjeta_video_id)
-    REFERENCES tipo_tarjeta_video_r_sch_s2 (tipo_tarjeta_id),
+    REFERENCES tipo_tarjeta_video_r_sch_s2 (tipo_tarjeta_video_id),
   CONSTRAINT fk_lap_f2_proc_sch_s2
     FOREIGN KEY (tipo_procesador_id)
     REFERENCES tipo_procesador_r_sch_s2 (tipo_procesador_id),
   CONSTRAINT fk_lap_f2_alm_sch_s2
     FOREIGN KEY (tipo_almacenamiento_id)
-    REFERENCES tipo_almacenamiento_r_sch_s2 (tipo_alm_id),
+    REFERENCES tipo_almacenamiento_r_sch_s2 (tipo_almacenamiento_id),
   CONSTRAINT fk_lap_f2_mon_sch_s2
     FOREIGN KEY (tipo_monitor_id)
     REFERENCES tipo_monitor_r_sch_s2 (tipo_monitor_id)

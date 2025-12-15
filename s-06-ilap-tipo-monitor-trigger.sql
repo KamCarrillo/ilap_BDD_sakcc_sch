@@ -5,6 +5,7 @@
 --                Replica INSERT/UPDATE/DELETE a las 4 réplicas r1..r4.
 
 create or replace trigger t_dml_tipo_monitor
+   instead of insert or update or delete on tipo_monitor
 declare
    v_count number;
 begin
@@ -110,4 +111,3 @@ begin
 end;
 /
 show errors
-
