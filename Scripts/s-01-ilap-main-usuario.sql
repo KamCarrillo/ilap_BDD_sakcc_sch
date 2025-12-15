@@ -39,6 +39,4 @@ prompt =====================================
 prompt ILAP_BDD listo en schbdd_s1, schbdd_s2, sakccbdd_s1, sakccbdd_s2
 prompt =====================================
 
-disconnect
-exit
 

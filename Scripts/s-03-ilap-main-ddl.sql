@@ -28,5 +28,3 @@ connect ilap_bdd/ilap_bdd@sakccbdd_s2
 
 Prompt Listo!
 
-DISCONNECT
-EXIT

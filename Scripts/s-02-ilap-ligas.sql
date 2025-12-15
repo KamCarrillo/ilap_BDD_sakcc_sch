@@ -152,6 +152,4 @@ prompt =====================================
 prompt Ligas creadas correctamente en los 4 nodos
 prompt =====================================
 
-disconnect
-exit
 

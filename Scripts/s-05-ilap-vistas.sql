@@ -120,7 +120,7 @@ SELECT
 FROM historico_status_laptop_f1
 UNION ALL
 SELECT
-  historico_status_id AS historico_status_laptop_id,
+  historico_status_laptop_id,
   laptop_id,
   status_laptop_id,
   fecha_status

@@ -180,11 +180,11 @@ CREATE TABLE laptop_f2_sch_s2 (
 ------------------------------------------------------------------------------
 
 CREATE TABLE historico_status_laptop_f2_sch_s2 (
-  historico_status_id    NUMBER(10)    NOT NULL,
+  historico_status_laptop_id    NUMBER(10)    NOT NULL,
   laptop_id         NUMBER(10)    NOT NULL,
   status_laptop_id  NUMBER(10)    NOT NULL,
   fecha_status      DATE          NOT NULL,
-  CONSTRAINT pk_historico_status_f2_sch_s2 PRIMARY KEY (historico_status_id),
+  CONSTRAINT pk_historico_status_f2_sch_s2 PRIMARY KEY (historico_status_laptop_id),
   CONSTRAINT fk_historico_f2_status
     FOREIGN KEY (status_laptop_id)
     REFERENCES status_laptop (status_laptop_id)

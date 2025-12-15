@@ -132,4 +132,4 @@ order by object_type, object_name;
 prompt ======================================================
 prompt MAIN terminado OK
 prompt ======================================================
-disconnect
+

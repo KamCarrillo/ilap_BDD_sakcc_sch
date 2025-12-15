@@ -12,9 +12,9 @@ Prompt ==========================================
 
 @s-01-ilap-main-usuario.sql
 @s-02-ilap-ligas.sql
-@s-03-ilap-main-ddl-sch.sql      -- tu main de tablas (SCH + SAKCC)
+@s-03-ilap-main-ddl.sql      -- tu main de tablas (SCH + SAKCC)
 @s-04-ilap-main-sinonimos-sch.sql
-@s-05-ilap-main-vistas.sql
+@s-05-main-vistas.sql
 @s-06-ilap-main-triggers.sql
 @s-07-ilap-main-soporte-blobs.sql
 

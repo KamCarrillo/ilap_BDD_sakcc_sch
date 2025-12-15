@@ -49,6 +49,3 @@ prompt Listo: sinónimos creados y validados (lado SAKCC)
 prompt =========================================
 
 
-disconnect
-exit
-
