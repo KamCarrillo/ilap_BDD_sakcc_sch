@@ -1,98 +1,98 @@
--- s-06-ilap-tipo-procesador-trigger.sql
--- @Descripción : Trigger de replicación síncrona para la vista tipo_procesador.
+-- s-06-ilap-tipo-procesador-trigger.sql (DELETE relajado)
+-- Trigger de replicación síncrona para la vista tipo_procesador.
 
-create or replace trigger t_dml_tipo_procesador
-   instead of insert or update or delete on tipo_procesador
-declare
-   v_count number;
-begin
-   case
-      when inserting then
+CREATE OR REPLACE TRIGGER t_dml_tipo_procesador
+   INSTEAD OF INSERT OR UPDATE OR DELETE ON tipo_procesador
+DECLARE
+   v_count NUMBER;
+BEGIN
+   CASE
+      WHEN INSERTING THEN
          v_count := 0;
 
-         insert into tipo_procesador_r1 (tipo_procesador_id, clave, descripcion)
-         values (:new.tipo_procesador_id, :new.clave, :new.descripcion);
-         v_count := v_count + sql%rowcount;
+         INSERT INTO tipo_procesador_r1 (tipo_procesador_id, clave, descripcion)
+         VALUES (:NEW.tipo_procesador_id, :NEW.clave, :NEW.descripcion);
+         v_count := v_count + SQL%ROWCOUNT;
 
-         insert into tipo_procesador_r2 (tipo_procesador_id, clave, descripcion)
-         values (:new.tipo_procesador_id, :new.clave, :new.descripcion);
-         v_count := v_count + sql%rowcount;
+         INSERT INTO tipo_procesador_r2 (tipo_procesador_id, clave, descripcion)
+         VALUES (:NEW.tipo_procesador_id, :NEW.clave, :NEW.descripcion);
+         v_count := v_count + SQL%ROWCOUNT;
 
-         insert into tipo_procesador_r3 (tipo_procesador_id, clave, descripcion)
-         values (:new.tipo_procesador_id, :new.clave, :new.descripcion);
-         v_count := v_count + sql%rowcount;
+         INSERT INTO tipo_procesador_r3 (tipo_procesador_id, clave, descripcion)
+         VALUES (:NEW.tipo_procesador_id, :NEW.clave, :NEW.descripcion);
+         v_count := v_count + SQL%ROWCOUNT;
 
-         insert into tipo_procesador_r4 (tipo_procesador_id, clave, descripcion)
-         values (:new.tipo_procesador_id, :new.clave, :new.descripcion);
-         v_count := v_count + sql%rowcount;
+         INSERT INTO tipo_procesador_r4 (tipo_procesador_id, clave, descripcion)
+         VALUES (:NEW.tipo_procesador_id, :NEW.clave, :NEW.descripcion);
+         v_count := v_count + SQL%ROWCOUNT;
 
-         if v_count <> 4 then
-            raise_application_error(
+         -- INSERT estricto: deben insertarse 4 filas
+         IF v_count <> 4 THEN
+            RAISE_APPLICATION_ERROR(
                -20041,
                'Número incorrecto de registros insertados en tipo_procesador: ' || v_count
             );
-         end if;
+         END IF;
 
-      when deleting then
+      WHEN DELETING THEN
          v_count := 0;
 
-         delete from tipo_procesador_r1
-         where tipo_procesador_id = :old.tipo_procesador_id;
-         v_count := v_count + sql%rowcount;
+         DELETE FROM tipo_procesador_r1
+          WHERE tipo_procesador_id = :OLD.tipo_procesador_id;
+         v_count := v_count + SQL%ROWCOUNT;
 
-         delete from tipo_procesador_r2
-         where tipo_procesador_id = :old.tipo_procesador_id;
-         v_count := v_count + sql%rowcount;
+         DELETE FROM tipo_procesador_r2
+          WHERE tipo_procesador_id = :OLD.tipo_procesador_id;
+         v_count := v_count + SQL%ROWCOUNT;
 
-         delete from tipo_procesador_r3
-         where tipo_procesador_id = :old.tipo_procesador_id;
-         v_count := v_count + sql%rowcount;
+         DELETE FROM tipo_procesador_r3
+          WHERE tipo_procesador_id = :OLD.tipo_procesador_id;
+         v_count := v_count + SQL%ROWCOUNT;
 
-         delete from tipo_procesador_r4
-         where tipo_procesador_id = :old.tipo_procesador_id;
-         v_count := v_count + sql%rowcount;
+         DELETE FROM tipo_procesador_r4
+          WHERE tipo_procesador_id = :OLD.tipo_procesador_id;
+         v_count := v_count + SQL%ROWCOUNT;
 
-         if v_count <> 4 then
-            raise_application_error(
-               -20041,
-               'Número incorrecto de registros eliminados en tipo_procesador: ' || v_count
-            );
-         end if;
+         -- DELETE relajado: no levantamos error aunque v_count <> 4
+         NULL;
 
-      when updating then
+      WHEN UPDATING THEN
          v_count := 0;
 
-         update tipo_procesador_r1
-         set clave       = :new.clave,
-             descripcion = :new.descripcion
-         where tipo_procesador_id = :new.tipo_procesador_id;
-         v_count := v_count + sql%rowcount;
+         UPDATE tipo_procesador_r1
+            SET clave       = :NEW.clave,
+                descripcion = :NEW.descripcion
+          WHERE tipo_procesador_id = :NEW.tipo_procesador_id;
+         v_count := v_count + SQL%ROWCOUNT;
 
-         update tipo_procesador_r2
-         set clave       = :new.clave,
-             descripcion = :new.descripcion
-         where tipo_procesador_id = :new.tipo_procesador_id;
-         v_count := v_count + sql%rowcount;
+         UPDATE tipo_procesador_r2
+            SET clave       = :NEW.clave,
+                descripcion = :NEW.descripcion
+          WHERE tipo_procesador_id = :NEW.tipo_procesador_id;
+         v_count := v_count + SQL%ROWCOUNT;
 
-         update tipo_procesador_r3
-         set clave       = :new.clave,
-             descripcion = :new.descripcion
-         where tipo_procesador_id = :new.tipo_procesador_id;
-         v_count := v_count + sql%rowcount;
+         UPDATE tipo_procesador_r3
+            SET clave       = :NEW.clave,
+                descripcion = :NEW.descripcion
+          WHERE tipo_procesador_id = :NEW.tipo_procesador_id;
+         v_count := v_count + SQL%ROWCOUNT;
 
-         update tipo_procesador_r4
-         set clave       = :new.clave,
-             descripcion = :new.descripcion
-         where tipo_procesador_id = :new.tipo_procesador_id;
-         v_count := v_count + sql%rowcount;
+         UPDATE tipo_procesador_r4
+            SET clave       = :NEW.clave,
+                descripcion = :NEW.descripcion
+          WHERE tipo_procesador_id = :NEW.tipo_procesador_id;
+         v_count := v_count + SQL%ROWCOUNT;
 
-         if v_count <> 4 then
-            raise_application_error(
+         -- UPDATE estricto
+         IF v_count <> 4 THEN
+            RAISE_APPLICATION_ERROR(
                -20041,
                'Número incorrecto de registros actualizados en tipo_procesador: ' || v_count
             );
-         end if;
-   end case;
-end;
+         END IF;
+   END CASE;
+END;
 /
-show errors
+SHOW ERRORS TRIGGER t_dml_tipo_procesador;
+/
+

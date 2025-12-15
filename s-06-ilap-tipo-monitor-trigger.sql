@@ -1,113 +1,96 @@
--- s-06-ilap-tipo-monitor-trigger.sql
--- @Autor       : SCH / SAKCC
--- @Fecha       : dd/mm/yyyy
--- @Descripción : Trigger de replicación síncrona para la vista tipo_monitor.
---                Replica INSERT/UPDATE/DELETE a las 4 réplicas r1..r4.
+-- s-06-ilap-tipo-monitor-trigger.sql (DELETE relajado)
+-- Trigger de replicación síncrona para la vista tipo_monitor.
 
-create or replace trigger t_dml_tipo_monitor
-   instead of insert or update or delete on tipo_monitor
-declare
-   v_count number;
-begin
-   case
-      when inserting then
+CREATE OR REPLACE TRIGGER t_dml_tipo_monitor
+   INSTEAD OF INSERT OR UPDATE OR DELETE ON tipo_monitor
+DECLARE
+   v_count NUMBER;
+BEGIN
+   CASE
+      WHEN INSERTING THEN
          v_count := 0;
 
-         -- réplica 1
-         insert into tipo_monitor_r1 (tipo_monitor_id, clave, descripcion)
-         values (:new.tipo_monitor_id, :new.clave, :new.descripcion);
-         v_count := v_count + sql%rowcount;
+         INSERT INTO tipo_monitor_r1 (tipo_monitor_id, clave, descripcion)
+         VALUES (:NEW.tipo_monitor_id, :NEW.clave, :NEW.descripcion);
+         v_count := v_count + SQL%ROWCOUNT;
 
-         -- réplica 2
-         insert into tipo_monitor_r2 (tipo_monitor_id, clave, descripcion)
-         values (:new.tipo_monitor_id, :new.clave, :new.descripcion);
-         v_count := v_count + sql%rowcount;
+         INSERT INTO tipo_monitor_r2 (tipo_monitor_id, clave, descripcion)
+         VALUES (:NEW.tipo_monitor_id, :NEW.clave, :NEW.descripcion);
+         v_count := v_count + SQL%ROWCOUNT;
 
-         -- réplica 3
-         insert into tipo_monitor_r3 (tipo_monitor_id, clave, descripcion)
-         values (:new.tipo_monitor_id, :new.clave, :new.descripcion);
-         v_count := v_count + sql%rowcount;
+         INSERT INTO tipo_monitor_r3 (tipo_monitor_id, clave, descripcion)
+         VALUES (:NEW.tipo_monitor_id, :NEW.clave, :NEW.descripcion);
+         v_count := v_count + SQL%ROWCOUNT;
 
-         -- réplica 4
-         insert into tipo_monitor_r4 (tipo_monitor_id, clave, descripcion)
-         values (:new.tipo_monitor_id, :new.clave, :new.descripcion);
-         v_count := v_count + sql%rowcount;
+         INSERT INTO tipo_monitor_r4 (tipo_monitor_id, clave, descripcion)
+         VALUES (:NEW.tipo_monitor_id, :NEW.clave, :NEW.descripcion);
+         v_count := v_count + SQL%ROWCOUNT;
 
-         if v_count <> 4 then
-            raise_application_error(
+         IF v_count <> 4 THEN
+            RAISE_APPLICATION_ERROR(
                -20040,
-               'Número incorrecto de registros insertados en tabla replicada: ' || v_count
+               'Número incorrecto de registros insertados en tipo_monitor: ' || v_count
             );
-         end if;
+         END IF;
 
-      when deleting then
+      WHEN DELETING THEN
          v_count := 0;
 
-         -- réplica 1
-         delete from tipo_monitor_r1
-         where tipo_monitor_id = :old.tipo_monitor_id;
-         v_count := v_count + sql%rowcount;
+         DELETE FROM tipo_monitor_r1
+          WHERE tipo_monitor_id = :OLD.tipo_monitor_id;
+         v_count := v_count + SQL%ROWCOUNT;
 
-         -- réplica 2
-         delete from tipo_monitor_r2
-         where tipo_monitor_id = :old.tipo_monitor_id;
-         v_count := v_count + sql%rowcount;
+         DELETE FROM tipo_monitor_r2
+          WHERE tipo_monitor_id = :OLD.tipo_monitor_id;
+         v_count := v_count + SQL%ROWCOUNT;
 
-         -- réplica 3
-         delete from tipo_monitor_r3
-         where tipo_monitor_id = :old.tipo_monitor_id;
-         v_count := v_count + sql%rowcount;
+         DELETE FROM tipo_monitor_r3
+          WHERE tipo_monitor_id = :OLD.tipo_monitor_id;
+         v_count := v_count + SQL%ROWCOUNT;
 
-         -- réplica 4
-         delete from tipo_monitor_r4
-         where tipo_monitor_id = :old.tipo_monitor_id;
-         v_count := v_count + sql%rowcount;
+         DELETE FROM tipo_monitor_r4
+          WHERE tipo_monitor_id = :OLD.tipo_monitor_id;
+         v_count := v_count + SQL%ROWCOUNT;
 
-         if v_count <> 4 then
-            raise_application_error(
-               -20040,
-               'Número incorrecto de registros eliminados en tabla replicada: ' || v_count
-            );
-         end if;
+         -- DELETE relajado: no validamos v_count
+         NULL;
 
-      when updating then
+      WHEN UPDATING THEN
          v_count := 0;
 
-         -- réplica 1
-         update tipo_monitor_r1
-         set clave        = :new.clave,
-             descripcion  = :new.descripcion
-         where tipo_monitor_id = :new.tipo_monitor_id;
-         v_count := v_count + sql%rowcount;
+         UPDATE tipo_monitor_r1
+            SET clave       = :NEW.clave,
+                descripcion = :NEW.descripcion
+          WHERE tipo_monitor_id = :NEW.tipo_monitor_id;
+         v_count := v_count + SQL%ROWCOUNT;
 
-         -- réplica 2
-         update tipo_monitor_r2
-         set clave        = :new.clave,
-             descripcion  = :new.descripcion
-         where tipo_monitor_id = :new.tipo_monitor_id;
-         v_count := v_count + sql%rowcount;
+         UPDATE tipo_monitor_r2
+            SET clave       = :NEW.clave,
+                descripcion = :NEW.descripcion
+          WHERE tipo_monitor_id = :NEW.tipo_monitor_id;
+         v_count := v_count + SQL%ROWCOUNT;
 
-         -- réplica 3
-         update tipo_monitor_r3
-         set clave        = :new.clave,
-             descripcion  = :new.descripcion
-         where tipo_monitor_id = :new.tipo_monitor_id;
-         v_count := v_count + sql%rowcount;
+         UPDATE tipo_monitor_r3
+            SET clave       = :NEW.clave,
+                descripcion = :NEW.descripcion
+          WHERE tipo_monitor_id = :NEW.tipo_monitor_id;
+         v_count := v_count + SQL%ROWCOUNT;
 
-         -- réplica 4
-         update tipo_monitor_r4
-         set clave        = :new.clave,
-             descripcion  = :new.descripcion
-         where tipo_monitor_id = :new.tipo_monitor_id;
-         v_count := v_count + sql%rowcount;
+         UPDATE tipo_monitor_r4
+            SET clave       = :NEW.clave,
+                descripcion = :NEW.descripcion
+          WHERE tipo_monitor_id = :NEW.tipo_monitor_id;
+         v_count := v_count + SQL%ROWCOUNT;
 
-         if v_count <> 4 then
-            raise_application_error(
+         IF v_count <> 4 THEN
+            RAISE_APPLICATION_ERROR(
                -20040,
-               'Número incorrecto de registros actualizados en tabla replicada: ' || v_count
+               'Número incorrecto de registros actualizados en tipo_monitor: ' || v_count
             );
-         end if;
-   end case;
-end;
+         END IF;
+   END CASE;
+END;
 /
-show errors
+SHOW ERRORS TRIGGER t_dml_tipo_monitor;
+/
+

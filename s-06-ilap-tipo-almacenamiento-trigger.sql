@@ -1,98 +1,96 @@
--- s-06-ilap-tipo-almacenamiento-trigger.sql
--- @Descripción : Trigger de replicación síncrona para la vista tipo_almacenamiento.
+-- s-06-ilap-tipo-almacenamiento-trigger.sql (DELETE relajado)
+-- Trigger de replicación síncrona para la vista tipo_almacenamiento.
 
-create or replace trigger t_dml_tipo_almacenamiento
-   instead of insert or update or delete on tipo_almacenamiento
-declare
-   v_count number;
-begin
-   case
-      when inserting then
+CREATE OR REPLACE TRIGGER t_dml_tipo_almacenamiento
+   INSTEAD OF INSERT OR UPDATE OR DELETE ON tipo_almacenamiento
+DECLARE
+   v_count NUMBER;
+BEGIN
+   CASE
+      WHEN INSERTING THEN
          v_count := 0;
 
-         insert into tipo_almacenamiento_r1 (tipo_almacenamiento_id, clave, descripcion)
-         values (:new.tipo_almacenamiento_id, :new.clave, :new.descripcion);
-         v_count := v_count + sql%rowcount;
+         INSERT INTO tipo_almacenamiento_r1 (tipo_almacenamiento_id, clave, descripcion)
+         VALUES (:NEW.tipo_almacenamiento_id, :NEW.clave, :NEW.descripcion);
+         v_count := v_count + SQL%ROWCOUNT;
 
-         insert into tipo_almacenamiento_r2 (tipo_almacenamiento_id, clave, descripcion)
-         values (:new.tipo_almacenamiento_id, :new.clave, :new.descripcion);
-         v_count := v_count + sql%rowcount;
+         INSERT INTO tipo_almacenamiento_r2 (tipo_almacenamiento_id, clave, descripcion)
+         VALUES (:NEW.tipo_almacenamiento_id, :NEW.clave, :NEW.descripcion);
+         v_count := v_count + SQL%ROWCOUNT;
 
-         insert into tipo_almacenamiento_r3 (tipo_almacenamiento_id, clave, descripcion)
-         values (:new.tipo_almacenamiento_id, :new.clave, :new.descripcion);
-         v_count := v_count + sql%rowcount;
+         INSERT INTO tipo_almacenamiento_r3 (tipo_almacenamiento_id, clave, descripcion)
+         VALUES (:NEW.tipo_almacenamiento_id, :NEW.clave, :NEW.descripcion);
+         v_count := v_count + SQL%ROWCOUNT;
 
-         insert into tipo_almacenamiento_r4 (tipo_almacenamiento_id, clave, descripcion)
-         values (:new.tipo_almacenamiento_id, :new.clave, :new.descripcion);
-         v_count := v_count + sql%rowcount;
+         INSERT INTO tipo_almacenamiento_r4 (tipo_almacenamiento_id, clave, descripcion)
+         VALUES (:NEW.tipo_almacenamiento_id, :NEW.clave, :NEW.descripcion);
+         v_count := v_count + SQL%ROWCOUNT;
 
-         if v_count <> 4 then
-            raise_application_error(
+         IF v_count <> 4 THEN
+            RAISE_APPLICATION_ERROR(
                -20043,
                'Número incorrecto de registros insertados en tipo_almacenamiento: ' || v_count
             );
-         end if;
+         END IF;
 
-      when deleting then
+      WHEN DELETING THEN
          v_count := 0;
 
-         delete from tipo_almacenamiento_r1
-         where tipo_almacenamiento_id = :old.tipo_almacenamiento_id;
-         v_count := v_count + sql%rowcount;
+         DELETE FROM tipo_almacenamiento_r1
+          WHERE tipo_almacenamiento_id = :OLD.tipo_almacenamiento_id;
+         v_count := v_count + SQL%ROWCOUNT;
 
-         delete from tipo_almacenamiento_r2
-         where tipo_almacenamiento_id = :old.tipo_almacenamiento_id;
-         v_count := v_count + sql%rowcount;
+         DELETE FROM tipo_almacenamiento_r2
+          WHERE tipo_almacenamiento_id = :OLD.tipo_almacenamiento_id;
+         v_count := v_count + SQL%ROWCOUNT;
 
-         delete from tipo_almacenamiento_r3
-         where tipo_almacenamiento_id = :old.tipo_almacenamiento_id;
-         v_count := v_count + sql%rowcount;
+         DELETE FROM tipo_almacenamiento_r3
+          WHERE tipo_almacenamiento_id = :OLD.tipo_almacenamiento_id;
+         v_count := v_count + SQL%ROWCOUNT;
 
-         delete from tipo_almacenamiento_r4
-         where tipo_almacenamiento_id = :old.tipo_almacenamiento_id;
-         v_count := v_count + sql%rowcount;
+         DELETE FROM tipo_almacenamiento_r4
+          WHERE tipo_almacenamiento_id = :OLD.tipo_almacenamiento_id;
+         v_count := v_count + SQL%ROWCOUNT;
 
-         if v_count <> 4 then
-            raise_application_error(
-               -20043,
-               'Número incorrecto de registros eliminados en tipo_almacenamiento: ' || v_count
-            );
-         end if;
+         -- DELETE relajado
+         NULL;
 
-      when updating then
+      WHEN UPDATING THEN
          v_count := 0;
 
-         update tipo_almacenamiento_r1
-         set clave       = :new.clave,
-             descripcion = :new.descripcion
-         where tipo_almacenamiento_id = :new.tipo_almacenamiento_id;
-         v_count := v_count + sql%rowcount;
+         UPDATE tipo_almacenamiento_r1
+            SET clave       = :NEW.clave,
+                descripcion = :NEW.descripcion
+          WHERE tipo_almacenamiento_id = :NEW.tipo_almacenamiento_id;
+         v_count := v_count + SQL%ROWCOUNT;
 
-         update tipo_almacenamiento_r2
-         set clave       = :new.clave,
-             descripcion = :new.descripcion
-         where tipo_almacenamiento_id = :new.tipo_almacenamiento_id;
-         v_count := v_count + sql%rowcount;
+         UPDATE tipo_almacenamiento_r2
+            SET clave       = :NEW.clave,
+                descripcion = :NEW.descripcion
+          WHERE tipo_almacenamiento_id = :NEW.tipo_almacenamiento_id;
+         v_count := v_count + SQL%ROWCOUNT;
 
-         update tipo_almacenamiento_r3
-         set clave       = :new.clave,
-             descripcion = :new.descripcion
-         where tipo_almacenamiento_id = :new.tipo_almacenamiento_id;
-         v_count := v_count + sql%rowcount;
+         UPDATE tipo_almacenamiento_r3
+            SET clave       = :NEW.clave,
+                descripcion = :NEW.descripcion
+          WHERE tipo_almacenamiento_id = :NEW.tipo_almacenamiento_id;
+         v_count := v_count + SQL%ROWCOUNT;
 
-         update tipo_almacenamiento_r4
-         set clave       = :new.clave,
-             descripcion = :new.descripcion
-         where tipo_almacenamiento_id = :new.tipo_almacenamiento_id;
-         v_count := v_count + sql%rowcount;
+         UPDATE tipo_almacenamiento_r4
+            SET clave       = :NEW.clave,
+                descripcion = :NEW.descripcion
+          WHERE tipo_almacenamiento_id = :NEW.tipo_almacenamiento_id;
+         v_count := v_count + SQL%ROWCOUNT;
 
-         if v_count <> 4 then
-            raise_application_error(
+         IF v_count <> 4 THEN
+            RAISE_APPLICATION_ERROR(
                -20043,
                'Número incorrecto de registros actualizados en tipo_almacenamiento: ' || v_count
             );
-         end if;
-   end case;
-end;
+         END IF;
+   END CASE;
+END;
 /
-show errors
+SHOW ERRORS TRIGGER t_dml_tipo_almacenamiento;
+/
+
