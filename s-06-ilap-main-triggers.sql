@@ -1,73 +1,58 @@
---@Autor: SCH / SAKCC
---@Fecha: dd/mm/yyyy
---@Descripción: MAIN de triggers (incluye soporte BLOB para pruebas)
+-- s-06-ilap-main-triggers.sql
+-- @Autor       : SCH / SAKCC
+-- @Fecha       : dd/mm/yyyy
+-- @Descripción : MAIN para compilar soporte BLOB (TI/TS + funciones + procedures)
+--                y luego triggers, en las 4 PDBs.
 
-clear screen
 set serveroutput on
 whenever sqlerror exit rollback
-
 prompt ======================================================
-prompt (0) Compilando soporte BLOB / funciones remotas (si aplica)
+prompt MAIN TRIGGERS + BLOB (por sinonimos + TI/TS)
 prompt ======================================================
 
-prompt ==============================
-prompt Soporte BLOB en schbdd_s1 (NO)
-prompt ==============================
+-------------------------------------------------------------------------------
+-- 1) schbdd_s1
+-------------------------------------------------------------------------------
+prompt ======================================================
+prompt (1/4) schbdd_s1  (Norte)
+prompt ======================================================
 connect ilap_bdd/ilap_bdd@schbdd_s1.fi.unam
--- FOTO remota (lee desde Sur)
-@s-07b-ilap-blob-foto-func-remote.sql
--- FACTURA API (local F1 + get_remote_serv_lap_*)
-@s-07c-ilap-sch-s1-blob-factura-api.sql
-
-prompt ==============================
-prompt Soporte BLOB en schbdd_s2 (EA)
-prompt ==============================
-connect ilap_bdd/ilap_bdd@schbdd_s2.fi.unam
-@s-07b-ilap-blob-foto-func-remote.sql
-@s-07c-ilap-sch-s2-blob-factura-api.sql
-
-prompt ==============================
-prompt Soporte BLOB en sakccbdd_s1 (WS)
-prompt ==============================
-connect ilap_bdd/ilap_bdd@sakccbdd_s1.fi.unam
-@s-07b-ilap-blob-foto-func-remote.sql
-@s-07c-ilap-sakcc-s1-blob-factura-api.sql
-
-prompt ==============================
-prompt Soporte BLOB en sakccbdd_s2 (SO) (DUENO FOTO)
-prompt ==============================
-connect ilap_bdd/ilap_bdd@sakccbdd_s2.fi.unam
--- Dueño de foto: procedure + función local
-@s-07b-ilap-sakcc-s2-blob-foto-api.sql
--- Factura API (local F4 + get_remote_serv_lap_*)
-@s-07c-ilap-sakcc-s2-blob-factura-api.sql
 
 
-prompt ======================================================
-prompt (1) Compilando TRIGGERS (vista global / replicados / blobs)
-prompt ======================================================
+-- Procedimientos BLOB (escritura) que usan TI_*
+@s-05b-ilap-procedimientos-blob.sql
 
-prompt ==============================
-prompt Triggers en schbdd_s1 (NO)
-prompt ==============================
-connect ilap_bdd/ilap_bdd@schbdd_s1.fi.unam
+-- TRIGGERS
 @s-06-ilap-sucursal-trigger.sql
 @s-06-ilap-sch-s1-sucursal-taller-trigger.sql
 @s-06-ilap-sch-s1-sucursal-venta-trigger.sql
 @s-06-ilap-laptop-trigger.sql
 @s-06-ilap-laptop-inventario-trigger.sql
 @s-06-ilap-historico-status-laptop-trigger.sql
--- servicio_laptop con BLOB (usa RPC sp_set_servicio_factura@...)
 @s-06-ilap-servicio-laptop-trigger.sql
+
 @s-06-ilap-tipo-procesador-trigger.sql
 @s-06-ilap-tipo-almacenamiento-trigger.sql
 @s-06-ilap-tipo-monitor-trigger.sql
 @s-06-ilap-tipo-tarjeta-video-trigger.sql
 
-prompt ==============================
-prompt Triggers en schbdd_s2 (EA)
-prompt ==============================
+prompt Objetos inválidos en schbdd_s1:
+column object_name format a40
+select object_type, object_name, status
+from user_objects
+where status <> 'VALID'
+order by object_type, object_name;
+
+-------------------------------------------------------------------------------
+-- 2) schbdd_s2
+-------------------------------------------------------------------------------
+prompt ======================================================
+prompt (2/4) schbdd_s2  (Este)
+prompt ======================================================
 connect ilap_bdd/ilap_bdd@schbdd_s2.fi.unam
+
+@s-05b-ilap-procedimientos-blob.sql
+
 @s-06-ilap-sucursal-trigger.sql
 @s-06-ilap-sch-s2-sucursal-taller-trigger.sql
 @s-06-ilap-sch-s2-sucursal-venta-trigger.sql
@@ -75,15 +60,28 @@ connect ilap_bdd/ilap_bdd@schbdd_s2.fi.unam
 @s-06-ilap-laptop-inventario-trigger.sql
 @s-06-ilap-historico-status-laptop-trigger.sql
 @s-06-ilap-servicio-laptop-trigger.sql
+
 @s-06-ilap-tipo-procesador-trigger.sql
 @s-06-ilap-tipo-almacenamiento-trigger.sql
 @s-06-ilap-tipo-monitor-trigger.sql
 @s-06-ilap-tipo-tarjeta-video-trigger.sql
 
-prompt ==============================
-prompt Triggers en sakccbdd_s1 (WS)
-prompt ==============================
+prompt Objetos inválidos en schbdd_s2:
+select object_type, object_name, status
+from user_objects
+where status <> 'VALID'
+order by object_type, object_name;
+
+-------------------------------------------------------------------------------
+-- 3) sakccbdd_s1
+-------------------------------------------------------------------------------
+prompt ======================================================
+prompt (3/4) sakccbdd_s1 (Oeste)
+prompt ======================================================
 connect ilap_bdd/ilap_bdd@sakccbdd_s1.fi.unam
+
+@s-05b-ilap-procedimientos-blob.sql
+
 @s-06-ilap-sucursal-trigger.sql
 @s-06-ilap-sakcc-s1-sucursal-taller-trigger.sql
 @s-06-ilap-sakcc-s1-sucursal-venta-trigger.sql
@@ -91,28 +89,48 @@ connect ilap_bdd/ilap_bdd@sakccbdd_s1.fi.unam
 @s-06-ilap-laptop-inventario-trigger.sql
 @s-06-ilap-historico-status-laptop-trigger.sql
 @s-06-ilap-servicio-laptop-trigger.sql
+
 @s-06-ilap-tipo-procesador-trigger.sql
 @s-06-ilap-tipo-almacenamiento-trigger.sql
 @s-06-ilap-tipo-monitor-trigger.sql
 @s-06-ilap-tipo-tarjeta-video-trigger.sql
 
-prompt ==============================
-prompt Triggers en sakccbdd_s2 (SO)
-prompt ==============================
+prompt Objetos inválidos en sakccbdd_s1:
+select object_type, object_name, status
+from user_objects
+where status <> 'VALID'
+order by object_type, object_name;
+
+-------------------------------------------------------------------------------
+-- 4) sakccbdd_s2
+-------------------------------------------------------------------------------
+prompt ======================================================
+prompt (4/4) sakccbdd_s2 (Sur)
+prompt ======================================================
 connect ilap_bdd/ilap_bdd@sakccbdd_s2.fi.unam
+
+@s-05b-ilap-procedimientos-blob.sql
+
 @s-06-ilap-sucursal-trigger.sql
 @s-06-ilap-sakcc-s2-sucursal-taller-trigger.sql
 @s-06-ilap-sakcc-s2-sucursal-venta-trigger.sql
--- version especial para Sur (foto local)
-@s-06-ilap-sakcc-s2-laptop-trigger.sql
+@s-06-ilap-laptop-trigger.sql
 @s-06-ilap-laptop-inventario-trigger.sql
 @s-06-ilap-historico-status-laptop-trigger.sql
 @s-06-ilap-servicio-laptop-trigger.sql
+
 @s-06-ilap-tipo-procesador-trigger.sql
 @s-06-ilap-tipo-almacenamiento-trigger.sql
 @s-06-ilap-tipo-monitor-trigger.sql
 @s-06-ilap-tipo-tarjeta-video-trigger.sql
 
+prompt Objetos inválidos en sakccbdd_s2:
+select object_type, object_name, status
+from user_objects
+where status <> 'VALID'
+order by object_type, object_name;
 
-prompt Listo! MAIN terminado.
+prompt ======================================================
+prompt MAIN terminado OK
+prompt ======================================================
 disconnect

@@ -31,3 +31,12 @@ exception
 end;
 /
 show errors
+
+create or replace procedure sp_del_laptop_foto_f1(
+  p_laptop_id in number
+) as
+begin
+  delete from laptop_foto_f1 where laptop_id = p_laptop_id;
+end;
+/
+show errors
