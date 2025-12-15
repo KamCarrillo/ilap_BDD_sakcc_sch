@@ -1,45 +1,42 @@
---@Autor: Jorge A. Rodríguez C
---@Fecha creación: dd/mm/yyyy
---@Descripción: Creación de usuarios en los 4 nodos
+-- s-01-ilap-main-usuario.sql
+-- Crea / recrea el usuario ILAP_BDD en las 4 PDB del proyecto.
+
 clear screen
 whenever sqlerror exit rollback;
 set serveroutput on
-Prompt Iniciando creación/eliminación de usuarios.
-accept syspass char prompt 'Proporcione el password de sys: ' hide
 
+prompt ====================================================
+prompt Creación/actualización de ILAP_BDD en los 4 nodos
+prompt ====================================================
 
-prompt =====================================
-prompt Creando usuario en sakccbdd_s1
-prompt =====================================
-connect sys/&&syspass@sakccbdd_s1 as sysdba
-DROP USER if exists ilap_bdd CASCADE;
-
-@s-01-ilap-usuario.sql
+accept syspass char prompt 'Password de SYS para las PDBs: ' hide
 
 prompt =====================================
-prompt Creando usuario en sakccbdd_s2
-prompt =====================================
-connect sys/&&syspass@sakccbdd_s2 as sysdba
-DROP USER if exists ilap_bdd CASCADE;
-
-@s-01-ilap-usuario.sql
-
-prompt =====================================
-prompt Creando usuario en schbdd_s1
+prompt 1) schbdd_s1
 prompt =====================================
 connect sys/&&syspass@schbdd_s1 as sysdba
-DROP USER if exists ilap_bdd CASCADE;
 @s-01-ilap-usuario.sql
 
-
-
 prompt =====================================
-prompt Creando usuario en schbdd_s2
+prompt 2) schbdd_s2
 prompt =====================================
 connect sys/&&syspass@schbdd_s2 as sysdba
-DROP USER if exists ilap_bdd CASCADE;
 @s-01-ilap-usuario.sql
 
+prompt =====================================
+prompt 3) sakccbdd_s1
+prompt =====================================
+connect sys/&&syspass@sakccbdd_s1 as sysdba
+@s-01-ilap-usuario.sql
 
-Prompt Listo!
-disconnect
+prompt =====================================
+prompt 4) sakccbdd_s2
+prompt =====================================
+connect sys/&&syspass@sakccbdd_s2 as sysdba
+@s-01-ilap-usuario.sql
+
+prompt =====================================
+prompt ILAP_BDD listo en schbdd_s1, schbdd_s2, sakccbdd_s1, sakccbdd_s2
+prompt =====================================
+
+

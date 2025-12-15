@@ -15,44 +15,44 @@ begin
     if inserting then
         -- Insertamos en el fragmento donde exista la sucursal Y sea de venta.
         insert into sucursal_venta_f1 (
-            sucursal_id, capacidad_max_venta,
-            horario_venta_apertura, horario_venta_cierre
+            sucursal_id, hora_apertura,
+	    hora_cierre
         )
-        select :new.sucursal_id, :new.capacidad_max_venta,
-               :new.horario_venta_apertura, :new.horario_venta_cierre
+        select :new.sucursal_id, 
+               :new.hora_apertura, :new.hora_cierre
         from sucursal_f1
         where sucursal_id = :new.sucursal_id
           and es_venta = 1;
         v_count := v_count + sql%rowcount;
 
         insert into sucursal_venta_f2 (
-            sucursal_id, capacidad_max_venta,
-            horario_venta_apertura, horario_venta_cierre
+            sucursal_id,
+            hora_apertura, hora_cierre
         )
-        select :new.sucursal_id, :new.capacidad_max_venta,
-               :new.horario_venta_apertura, :new.horario_venta_cierre
+        select :new.sucursal_id,
+               :new.hora_apertura, :new.hora_cierre
         from sucursal_f2
         where sucursal_id = :new.sucursal_id
           and es_venta = 1;
         v_count := v_count + sql%rowcount;
 
         insert into sucursal_venta_f3 (
-            sucursal_id, capacidad_max_venta,
-            horario_venta_apertura, horario_venta_cierre
+            sucursal_id,
+            hora_apertura, hora_cierre
         )
-        select :new.sucursal_id, :new.capacidad_max_venta,
-               :new.horario_venta_apertura, :new.horario_venta_cierre
+        select :new.sucursal_id,
+               :new.hora_apertura, :new.hora_cierre
         from sucursal_f3
         where sucursal_id = :new.sucursal_id
           and es_venta = 1;
         v_count := v_count + sql%rowcount;
 
         insert into sucursal_venta_f4 (
-            sucursal_id, capacidad_max_venta,
-            horario_venta_apertura, horario_venta_cierre
+            sucursal_id, 
+            hora_apertura, hora_cierre
         )
-        select :new.sucursal_id, :new.capacidad_max_venta,
-               :new.horario_venta_apertura, :new.horario_venta_cierre
+        select :new.sucursal_id, 
+               :new.hora_apertura, :new.hora_cierre
         from sucursal_f4
         where sucursal_id = :new.sucursal_id
           and es_venta = 1;

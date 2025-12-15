@@ -10,19 +10,19 @@ begin
       when inserting then
          v_count := 0;
 
-         insert into tipo_almacenamiento_r1 (tipo_alm_id, clave, descripcion)
+         insert into tipo_almacenamiento_r1 (tipo_almacenamiento_id, clave, descripcion)
          values (:new.tipo_almacenamiento_id, :new.clave, :new.descripcion);
          v_count := v_count + sql%rowcount;
 
-         insert into tipo_almacenamiento_r2 (tipo_alm_id, clave, descripcion)
+         insert into tipo_almacenamiento_r2 (tipo_almacenamiento_id, clave, descripcion)
          values (:new.tipo_almacenamiento_id, :new.clave, :new.descripcion);
          v_count := v_count + sql%rowcount;
 
-         insert into tipo_almacenamiento_r3 (tipo_alm_id, clave, descripcion)
+         insert into tipo_almacenamiento_r3 (tipo_almacenamiento_id, clave, descripcion)
          values (:new.tipo_almacenamiento_id, :new.clave, :new.descripcion);
          v_count := v_count + sql%rowcount;
 
-         insert into tipo_almacenamiento_r4 (tipo_alm_id, clave, descripcion)
+         insert into tipo_almacenamiento_r4 (tipo_almacenamiento_id, clave, descripcion)
          values (:new.tipo_almacenamiento_id, :new.clave, :new.descripcion);
          v_count := v_count + sql%rowcount;
 
@@ -37,19 +37,19 @@ begin
          v_count := 0;
 
          delete from tipo_almacenamiento_r1
-         where tipo_alm_id = :old.tipo_almacenamiento_id;
+         where tipo_almacenamiento_id = :old.tipo_almacenamiento_id;
          v_count := v_count + sql%rowcount;
 
          delete from tipo_almacenamiento_r2
-         where tipo_alm_id = :old.tipo_almacenamiento_id;
+         where tipo_almacenamiento_id = :old.tipo_almacenamiento_id;
          v_count := v_count + sql%rowcount;
 
          delete from tipo_almacenamiento_r3
-         where tipo_alm_id = :old.tipo_almacenamiento_id;
+         where tipo_almacenamiento_id = :old.tipo_almacenamiento_id;
          v_count := v_count + sql%rowcount;
 
          delete from tipo_almacenamiento_r4
-         where tipo_alm_id = :old.tipo_almacenamiento_id;
+         where tipo_almacenamiento_id = :old.tipo_almacenamiento_id;
          v_count := v_count + sql%rowcount;
 
          if v_count <> 4 then
@@ -65,25 +65,25 @@ begin
          update tipo_almacenamiento_r1
          set clave       = :new.clave,
              descripcion = :new.descripcion
-         where tipo_alm_id = :new.tipo_almacenamiento_id;
+         where tipo_almacenamiento_id = :new.tipo_almacenamiento_id;
          v_count := v_count + sql%rowcount;
 
          update tipo_almacenamiento_r2
          set clave       = :new.clave,
              descripcion = :new.descripcion
-         where tipo_alm_id = :new.tipo_almacenamiento_id;
+         where tipo_almacenamiento_id = :new.tipo_almacenamiento_id;
          v_count := v_count + sql%rowcount;
 
          update tipo_almacenamiento_r3
          set clave       = :new.clave,
              descripcion = :new.descripcion
-         where tipo_alm_id = :new.tipo_almacenamiento_id;
+         where tipo_almacenamiento_id = :new.tipo_almacenamiento_id;
          v_count := v_count + sql%rowcount;
 
          update tipo_almacenamiento_r4
          set clave       = :new.clave,
              descripcion = :new.descripcion
-         where tipo_alm_id = :new.tipo_almacenamiento_id;
+         where tipo_almacenamiento_id = :new.tipo_almacenamiento_id;
          v_count := v_count + sql%rowcount;
 
          if v_count <> 4 then

@@ -46,9 +46,11 @@ create or replace synonym laptop_foto_f4 for laptop_foto_f4_sakcc_s2;
 -------------------------------------------------------------------------------
 -- HISTORICO_STATUS
 -------------------------------------------------------------------------------
-create or replace synonym historico_status_laptop_f1 for historico_status_laptop_f1_sch_s1@schbdd_s1.fi.unam;
-create or replace synonym historico_status_laptop_f2 for historico_status_laptop_f2_sch_s2;
+create or replace synonym historico_status_laptop_f1
+  for historico_status_laptop_f1_sch_s1@schbdd_s1.fi.unam;
 
+create or replace synonym historico_status_laptop_f2
+  for historico_status_laptop_f2_sch_s2@schbdd_s2.fi.unam;
 -------------------------------------------------------------------------------
 -- SERVICIO_LAPTOP
 -------------------------------------------------------------------------------
@@ -85,3 +87,9 @@ create or replace synonym tipo_monitor_r2 for tipo_monitor_r_sch_s1@schbdd_s1.fi
 create or replace synonym tipo_monitor_r3 for tipo_monitor_r_sakcc_s1@sakccbdd_s1.fi.unam;
 create or replace synonym tipo_monitor_r4 for tipo_monitor_r_sakcc_s2;
 -- status_laptop SIN sinónimos (copia manual).
+-------------------------------------------------------------------------------
+-- LAPTOP_FOTO (BLOB vertical, local en SAKCC S2)
+-------------------------------------------------------------------------------
+create or replace synonym laptop_foto_f1
+  for laptop_foto_f1_sakcc_s2;
+

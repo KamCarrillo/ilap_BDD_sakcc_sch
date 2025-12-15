@@ -56,7 +56,6 @@ create or replace synonym servicio_laptop_f2 for servicio_laptop_f2_sch_s2;
 create or replace synonym servicio_laptop_f3 for servicio_laptop_f3_sakcc_s1@sakccbdd_s1.fi.unam;
 create or replace synonym servicio_laptop_f4 for servicio_laptop_f4_sakcc_s2@sakccbdd_s2.fi.unam;
 
-create or replace synonym laptop_foto_f4 for laptop_foto_f4_sakcc_s2@sakccbdd_s2.fi.unam;
 -------------------------------------------------------------------------------
 -- TABLAS REPLICADAS (tipo_*)
 -------------------------------------------------------------------------------
@@ -86,3 +85,10 @@ create or replace synonym tipo_monitor_r3 for tipo_monitor_r_sakcc_s1@sakccbdd_s
 create or replace synonym tipo_monitor_r4 for tipo_monitor_r_sakcc_s2@sakccbdd_s2.fi.unam;
 
 -- status_laptop SIN sinónimos (copia manual).
+
+-------------------------------------------------------------------------------
+-- LAPTOP_FOTO (BLOB vertical, almacenado en SAKCC S2)
+-------------------------------------------------------------------------------
+create or replace synonym laptop_foto_f1
+  for laptop_foto_f1_sakcc_s2@sakccbdd_s2.fi.unam;
+

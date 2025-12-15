@@ -16,7 +16,7 @@ prompt ======================================================
 prompt ======================================================
 prompt (1/4) schbdd_s1  (Norte)
 prompt ======================================================
-connect ilap_bdd/ilap_bdd@schbdd_s1.fi.unam
+connect ilap_bdd/ilap_bdd@schbdd_s1
 
 
 -- Procedimientos BLOB (escritura) que usan TI_*
@@ -49,8 +49,7 @@ order by object_type, object_name;
 prompt ======================================================
 prompt (2/4) schbdd_s2  (Este)
 prompt ======================================================
-connect ilap_bdd/ilap_bdd@schbdd_s2.fi.unam
-
+connect ilap_bdd/ilap_bdd@schbdd_s2
 @s-05b-ilap-procedimientos-blob.sql
 
 @s-06-ilap-sucursal-trigger.sql
@@ -78,7 +77,7 @@ order by object_type, object_name;
 prompt ======================================================
 prompt (3/4) sakccbdd_s1 (Oeste)
 prompt ======================================================
-connect ilap_bdd/ilap_bdd@sakccbdd_s1.fi.unam
+connect ilap_bdd/ilap_bdd@sakccbdd_s1
 
 @s-05b-ilap-procedimientos-blob.sql
 
@@ -107,7 +106,7 @@ order by object_type, object_name;
 prompt ======================================================
 prompt (4/4) sakccbdd_s2 (Sur)
 prompt ======================================================
-connect ilap_bdd/ilap_bdd@sakccbdd_s2.fi.unam
+connect ilap_bdd/ilap_bdd@sakccbdd_s2
 
 @s-05b-ilap-procedimientos-blob.sql
 
@@ -133,4 +132,4 @@ order by object_type, object_name;
 prompt ======================================================
 prompt MAIN terminado OK
 prompt ======================================================
-disconnect
+

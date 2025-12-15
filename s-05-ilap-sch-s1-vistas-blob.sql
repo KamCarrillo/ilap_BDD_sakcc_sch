@@ -1,11 +1,12 @@
--- s-05-ilap-sakcc-s1-vistas-blob.sql
--- @Descripción: Vistas con BLOB para el sitio sakccbdd_s1 (Oeste).
+-- s-05-ilap-sch-s1-vistas-blob.sql
+-- @Descripción: Vistas con BLOB para el sitio schbdd_s1 (Norte).
 
 set serveroutput on
-Prompt Creando vistas con BLOB en sakccbdd_s1 ...
+Prompt Creando vistas con BLOB en schbdd_s1 ...
 
 /* LAPTOP
- *  - Foto sigue estando en laptop_foto_f1 (Sur).
+ *  - En tu diseño, la foto está en laptop_foto_f1 (Sur / sakccbdd_s2).
+ *  - Desde schbdd_s1 siempre se usa get_remote_foto_f1_by_id.
  */
 create or replace view laptop as
 select  l.laptop_id,
@@ -41,12 +42,11 @@ from (
 ) l;
 
 /* SERVICIO_LAPTOP
- *  - fragmento local: servicio_lap_f3
+ *  - En schbdd_s1 el fragmento local con BLOB es servicio_lap_f1.
+ *  - f2,f3,f4 se consultan vía funciones remotas.
  */
 create or replace view servicio_laptop as
-select num_servicio,laptop_id,importe,diagnostico,
-       get_remote_serv_lap_f1_by_id(num_servicio,laptop_id) factura,
-       sucursal_id
+select num_servicio,laptop_id,importe,diagnostico,factura,sucursal_id
 from servicio_laptop_f1
 union all
 select num_servicio,laptop_id,importe,diagnostico,
@@ -54,7 +54,9 @@ select num_servicio,laptop_id,importe,diagnostico,
        sucursal_id
 from servicio_laptop_f2
 union all
-select num_servicio,laptop_id,importe,diagnostico,factura,sucursal_id
+select num_servicio,laptop_id,importe,diagnostico,
+       get_remote_serv_lap_f3_by_id(num_servicio,laptop_id) factura,
+       sucursal_id
 from servicio_laptop_f3
 union all
 select num_servicio,laptop_id,importe,diagnostico,
@@ -62,5 +64,5 @@ select num_servicio,laptop_id,importe,diagnostico,
        sucursal_id
 from servicio_laptop_f4;
 
-Prompt Vistas con BLOB creadas en sakccbdd_s1.
+Prompt Vistas con BLOB creadas en schbdd_s1.
 

@@ -44,26 +44,24 @@ create global temporary table ts_laptop_f1(
  *  - ti_servicio_laptop_fN : INSERT
  *  - ts_servicio_laptop_fN : SELECT
  ***************************************************************************/
-Prompt Creando tablas temporales para SERVICIO_LAPTOP ...
-
 -- Fragmento 1
 create global temporary table ti_servicio_laptop_f1(
   num_servicio number(10,0) not null,
   laptop_id    number(10,0) not null,
-  importe      number(8,2)   not null,
-  diagnostico  varchar2(2000) not null,
+  importe      number(8,2),           -- Sin NOT NULL
+  diagnostico  varchar2(2000),        -- Sin NOT NULL
   factura      blob,
-  sucursal_id  number(10,0) not null,
+  sucursal_id  number(10,0),          -- Sin NOT NULL
   constraint ti_servicio_laptop_f1_pk primary key (num_servicio, laptop_id)
 ) on commit preserve rows;
 
 create global temporary table ts_servicio_laptop_f1(
   num_servicio number(10,0) not null,
   laptop_id    number(10,0) not null,
-  importe      number(8,2)   not null,
-  diagnostico  varchar2(2000) not null,
+  importe      number(8,2),           -- Sin NOT NULL
+  diagnostico  varchar2(2000),        -- Sin NOT NULL
   factura      blob,
-  sucursal_id  number(10,0) not null,
+  sucursal_id  number(10,0),          -- Sin NOT NULL
   constraint ts_servicio_laptop_f1_pk primary key (num_servicio, laptop_id)
 ) on commit preserve rows;
 
@@ -71,20 +69,20 @@ create global temporary table ts_servicio_laptop_f1(
 create global temporary table ti_servicio_laptop_f2(
   num_servicio number(10,0) not null,
   laptop_id    number(10,0) not null,
-  importe      number(8,2)   not null,
-  diagnostico  varchar2(2000) not null,
+  importe      number(8,2),           -- Sin NOT NULL
+  diagnostico  varchar2(2000),        -- Sin NOT NULL
   factura      blob,
-  sucursal_id  number(10,0) not null,
+  sucursal_id  number(10,0),          -- Sin NOT NULL
   constraint ti_servicio_laptop_f2_pk primary key (num_servicio, laptop_id)
 ) on commit preserve rows;
 
 create global temporary table ts_servicio_laptop_f2(
   num_servicio number(10,0) not null,
   laptop_id    number(10,0) not null,
-  importe      number(8,2)   not null,
-  diagnostico  varchar2(2000) not null,
+  importe      number(8,2),           -- Sin NOT NULL
+  diagnostico  varchar2(2000),        -- Sin NOT NULL
   factura      blob,
-  sucursal_id  number(10,0) not null,
+  sucursal_id  number(10,0),          -- Sin NOT NULL
   constraint ts_servicio_laptop_f2_pk primary key (num_servicio, laptop_id)
 ) on commit preserve rows;
 
@@ -92,20 +90,20 @@ create global temporary table ts_servicio_laptop_f2(
 create global temporary table ti_servicio_laptop_f3(
   num_servicio number(10,0) not null,
   laptop_id    number(10,0) not null,
-  importe      number(8,2)   not null,
-  diagnostico  varchar2(2000) not null,
+  importe      number(8,2),           -- Sin NOT NULL
+  diagnostico  varchar2(2000),        -- Sin NOT NULL
   factura      blob,
-  sucursal_id  number(10,0) not null,
+  sucursal_id  number(10,0),          -- Sin NOT NULL
   constraint ti_servicio_laptop_f3_pk primary key (num_servicio, laptop_id)
 ) on commit preserve rows;
 
 create global temporary table ts_servicio_laptop_f3(
   num_servicio number(10,0) not null,
   laptop_id    number(10,0) not null,
-  importe      number(8,2)   not null,
-  diagnostico  varchar2(2000) not null,
+  importe      number(8,2),           -- Sin NOT NULL
+  diagnostico  varchar2(2000),        -- Sin NOT NULL
   factura      blob,
-  sucursal_id  number(10,0) not null,
+  sucursal_id  number(10,0),          -- Sin NOT NULL
   constraint ts_servicio_laptop_f3_pk primary key (num_servicio, laptop_id)
 ) on commit preserve rows;
 
@@ -113,21 +111,21 @@ create global temporary table ts_servicio_laptop_f3(
 create global temporary table ti_servicio_laptop_f4(
   num_servicio number(10,0) not null,
   laptop_id    number(10,0) not null,
-  importe      number(8,2)   not null,
-  diagnostico  varchar2(2000) not null,
+  importe      number(8,2),           -- Sin NOT NULL
+  diagnostico  varchar2(2000),        -- Sin NOT NULL
   factura      blob,
-  sucursal_id  number(10,0) not null,
+  sucursal_id  number(10,0),          -- Sin NOT NULL
   constraint ti_servicio_laptop_f4_pk primary key (num_servicio, laptop_id)
 ) on commit preserve rows;
 
 create global temporary table ts_servicio_laptop_f4(
   num_servicio number(10,0) not null,
   laptop_id    number(10,0) not null,
-  importe      number(8,2)   not null,
-  diagnostico  varchar2(2000) not null,
+  importe      number(8,2),           -- Sin NOT NULL
+  diagnostico  varchar2(2000),        -- Sin NOT NULL
   factura      blob,
-  sucursal_id  number(10,0) not null,
+  sucursal_id  number(10,0),          -- Sin NOT NULL
   constraint ts_servicio_laptop_f4_pk primary key (num_servicio, laptop_id)
 ) on commit preserve rows;
 
-Prompt Tablas temporales para BLOB creadas.
+Prompt Tablas temporales para BLOB creadas exitosamente.

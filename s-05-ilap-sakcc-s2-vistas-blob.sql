@@ -66,3 +66,4 @@ select num_servicio,laptop_id,importe,diagnostico,factura,sucursal_id
 from servicio_laptop_f4;
 
 Prompt Vistas con BLOB creadas en sakccbdd_s2.
+

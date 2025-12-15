@@ -51,7 +51,7 @@ begin
   insert into ti_servicio_laptop_f1(num_servicio,laptop_id,importe,diagnostico,factura,sucursal_id)
   values(p_num_servicio,p_laptop_id,0,'',p_factura,0);
 
-  update servicio_lap_f1
+  update servicio_laptop_f1
      set factura = (select factura from ti_servicio_laptop_f1
                     where num_servicio=p_num_servicio and laptop_id=p_laptop_id)
    where num_servicio=p_num_servicio and laptop_id=p_laptop_id;
@@ -75,7 +75,7 @@ begin
   insert into ti_servicio_laptop_f2(num_servicio,laptop_id,importe,diagnostico,factura,sucursal_id)
   values(p_num_servicio,p_laptop_id,0,'',p_factura,0);
 
-  update servicio_lap_f2
+  update servicio_laptop_f2
      set factura = (select factura from ti_servicio_laptop_f2
                     where num_servicio=p_num_servicio and laptop_id=p_laptop_id)
    where num_servicio=p_num_servicio and laptop_id=p_laptop_id;
@@ -99,7 +99,7 @@ begin
   insert into ti_servicio_laptop_f3(num_servicio,laptop_id,importe,diagnostico,factura,sucursal_id)
   values(p_num_servicio,p_laptop_id,0,'',p_factura,0);
 
-  update servicio_lap_f3
+  update servicio_laptop_f3
      set factura = (select factura from ti_servicio_laptop_f3
                     where num_servicio=p_num_servicio and laptop_id=p_laptop_id)
    where num_servicio=p_num_servicio and laptop_id=p_laptop_id;
@@ -123,7 +123,7 @@ begin
   insert into ti_servicio_laptop_f4(num_servicio,laptop_id,importe,diagnostico,factura,sucursal_id)
   values(p_num_servicio,p_laptop_id,0,'',p_factura,0);
 
-  update servicio_lap_f4
+  update servicio_laptop_f4
      set factura = (select factura from ti_servicio_laptop_f4
                     where num_servicio=p_num_servicio and laptop_id=p_laptop_id)
    where num_servicio=p_num_servicio and laptop_id=p_laptop_id;

@@ -56,4 +56,4 @@ Prompt ============================================
 Prompt Listo! Vistas y funciones de BLOB creadas
 Prompt ============================================
 
-exit
+

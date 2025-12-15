@@ -7,8 +7,8 @@ set serveroutput on
 
 /***************************************************************************
  * Funciones para foto de LAPTOP
- *  - La tabla que contiene el BLOB es laptop_foto_f1 (vertical).
- *    Se accede siempre vía sinónimo laptop_foto_f1.
+ *  - La tabla física que contiene el BLOB es LAPTOP_FOTO_F1_SAKCC_S2.
+ *  - En cada PDB se accede SIEMPRE vía el sinónimo laptop_foto_f1.
  ***************************************************************************/
 
 create or replace function get_remote_foto_f1_by_id(
@@ -20,7 +20,7 @@ begin
   -- Limpia la tabla temporal
   delete from ts_laptop_f1;
 
-  -- Inserta el BLOB (local o remoto vía sinónimo)
+  -- Inserta el BLOB (local o remoto vía sinónimo laptop_foto_f1)
   insert into ts_laptop_f1 (laptop_id, foto)
   select laptop_id, foto
   from   laptop_foto_f1
@@ -42,9 +42,9 @@ show errors
 
 /***************************************************************************
  * Funciones para factura de SERVICIO_LAPTOP
- *  - Cada fragmento servicio_lap_fN tiene su propia factura (BLOB).
+ *  - Cada fragmento servicio_laptop_fN tiene su propia factura (BLOB).
  *  - Desde cada nodo, los fragmentos remotos se alcanzan vía sinónimos
- *    servicio_lap_f1, servicio_lap_f2, servicio_lap_f3, servicio_lap_f4.
+ *    servicio_laptop_f1, servicio_laptop_f2, servicio_laptop_f3, servicio_laptop_f4.
  ***************************************************************************/
 
 create or replace function get_remote_serv_lap_f1_by_id(
@@ -60,7 +60,7 @@ begin
     num_servicio, laptop_id, importe, diagnostico, factura, sucursal_id
   )
   select num_servicio, laptop_id, importe, diagnostico, factura, sucursal_id
-  from   servicio_lap_f1
+  from   servicio_laptop_f1
   where  num_servicio = p_num_servicio
   and    laptop_id    = p_laptop_id;
 
@@ -92,7 +92,7 @@ begin
     num_servicio, laptop_id, importe, diagnostico, factura, sucursal_id
   )
   select num_servicio, laptop_id, importe, diagnostico, factura, sucursal_id
-  from   servicio_lap_f2
+  from   servicio_laptop_f2
   where  num_servicio = p_num_servicio
   and    laptop_id    = p_laptop_id;
 
@@ -124,7 +124,7 @@ begin
     num_servicio, laptop_id, importe, diagnostico, factura, sucursal_id
   )
   select num_servicio, laptop_id, importe, diagnostico, factura, sucursal_id
-  from   servicio_lap_f3
+  from   servicio_laptop_f3
   where  num_servicio = p_num_servicio
   and    laptop_id    = p_laptop_id;
 
@@ -156,7 +156,7 @@ begin
     num_servicio, laptop_id, importe, diagnostico, factura, sucursal_id
   )
   select num_servicio, laptop_id, importe, diagnostico, factura, sucursal_id
-  from   servicio_lap_f4
+  from   servicio_laptop_f4
   where  num_servicio = p_num_servicio
   and    laptop_id    = p_laptop_id;
 
@@ -176,6 +176,4 @@ end;
 show errors
 
 Prompt Funciones para BLOB creadas.
-
-
 

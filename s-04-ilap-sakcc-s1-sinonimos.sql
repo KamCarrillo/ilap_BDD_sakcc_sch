@@ -1,6 +1,6 @@
 -- @Autor       : Kam Carrillo (SAKCC)
 -- @Fecha       : dd/mm/yyyy
--- @Descripción : Sinónimos de fragmentos y réplicas para schbdd_s1
+-- @Descripción : Sinónimos de fragmentos y réplicas para sakccbdd_s1
 
 set serveroutput on
 
@@ -43,7 +43,6 @@ create or replace synonym laptop_f4 for laptop_f4_sakcc_s2@sakccbdd_s2.fi.unam;
 create or replace synonym laptop_inventario_f2 for laptop_inventario_f2_sakcc_s1;
 create or replace synonym laptop_inventario_f1 for laptop_inventario_f1_sch_s1@schbdd_s1.fi.unam;
 
-
 create or replace synonym laptop_foto_f4 for laptop_foto_f4_sakcc_s2@sakccbdd_s2.fi.unam;
 
 -------------------------------------------------------------------------------
@@ -62,7 +61,8 @@ create or replace synonym servicio_laptop_f4 for servicio_laptop_f4_sakcc_s2@sak
 
 -------------------------------------------------------------------------------
 -- TABLAS REPLICADAS (tipo_*)
--- Convención: <nombre_global>_rN, donde N = 1..4 (r1 es réplica local).
+-- Convención: <nombre_global>_rN, donde N = 1..4 (r1 es réplica local de SCH S1,
+-- r2 de SCH S2, r3 de SAKCC S1 (local), r4 de SAKCC S2).
 -------------------------------------------------------------------------------
 
 -- tipo_procesador
@@ -73,7 +73,7 @@ create or replace synonym tipo_procesador_r4 for tipo_procesador_r_sakcc_s2@sakc
 
 -- tipo_tarjeta_video
 create or replace synonym tipo_tarjeta_video_r3 for tipo_tarjeta_video_r_sakcc_s1;
-create or replace synonym tipo_tarjeta_video_r1 for tipo_tarjeta_video_r_sch_s1@schbdd_s2.fi.unam;
+create or replace synonym tipo_tarjeta_video_r1 for tipo_tarjeta_video_r_sch_s1@schbdd_s1.fi.unam;
 create or replace synonym tipo_tarjeta_video_r2 for tipo_tarjeta_video_r_sch_s2@schbdd_s2.fi.unam;
 create or replace synonym tipo_tarjeta_video_r4 for tipo_tarjeta_video_r_sakcc_s2@sakccbdd_s2.fi.unam;
 
@@ -90,3 +90,6 @@ create or replace synonym tipo_monitor_r2 for tipo_monitor_r_sch_s2@schbdd_s2.fi
 create or replace synonym tipo_monitor_r4 for tipo_monitor_r_sakcc_s2@sakccbdd_s2.fi.unam;
 
 -- status_laptop NO requiere sinónimos (copia manual en los 4 nodos).
+
+create or replace synonym laptop_foto_f1
+  for laptop_foto_f1_sakcc_s2@sakccbdd_s2.fi.unam;
