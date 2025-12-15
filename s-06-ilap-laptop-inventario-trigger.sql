@@ -1,43 +1,39 @@
--- s-06-ilap-laptop-inventario-trigger.sql
--- INSTEAD OF DML sobre vista LAPTOP_INVENTARIO (derivada de LAPTOP)
+--@Autor: SCH / SAKCC
+--@Fecha: dd/mm/yyyy
+--@Descripción: Trigger INSTEAD OF para vista global LAPTOP_INVENTARIO (vertical)
 
-create or replace trigger trg_laptop_inventario_io
-instead of insert or delete on laptop_inventario
+create or replace trigger t_dml_laptop_inventario
+instead of insert or update or delete on laptop_inventario
 declare
-  v_digit number;
-  v_num_serie varchar2(18);
+  v_count number := 0;
 begin
+  if updating then
+    raise_application_error(-20030,'UPDATE no implementado para LAPTOP_INVENTARIO');
+  end if;
+
   if inserting then
-    -- ubicamos el fragmento del laptop por num_serie (vía vista laptop sin blob o tabla global)
-    select num_serie into v_num_serie
-    from laptop
-    where laptop_id = :new.laptop_id;
+    -- Parte NO (processing): fragmento f1
+    insert into laptop_inventario_f1(laptop_id,status_laptop_id,fecha_status,sucursal_id)
+    values(:new.laptop_id,:new.status_laptop_id,:new.fecha_status,:new.sucursal_id);
+    v_count := v_count + sql%rowcount;
 
-    v_digit := to_number(substr(v_num_serie,1,1));
+    -- Parte WS (security): fragmento f2
+    insert into laptop_inventario_f2(laptop_id,rfc_cliente,num_tarjeta)
+    values(:new.laptop_id,:new.rfc_cliente,:new.num_tarjeta);
+    v_count := v_count + sql%rowcount;
 
-    if v_digit between 0 and 1 then
-      insert into laptop_inventario_f1 (laptop_id, sucursal_id, existencia, fecha_alta)
-      values (:new.laptop_id,:new.sucursal_id,:new.existencia,:new.fecha_alta);
-
-    elsif v_digit between 2 and 3 then
-      insert into laptop_inventario_f4 (laptop_id, sucursal_id, existencia, fecha_alta)
-      values (:new.laptop_id,:new.sucursal_id,:new.existencia,:new.fecha_alta);
-
-    elsif v_digit between 4 and 5 then
-      insert into laptop_inventario_f3 (laptop_id, sucursal_id, existencia, fecha_alta)
-      values (:new.laptop_id,:new.sucursal_id,:new.existencia,:new.fecha_alta);
-
-    else
-      insert into laptop_inventario_f2 (laptop_id, sucursal_id, existencia, fecha_alta)
-      values (:new.laptop_id,:new.sucursal_id,:new.existencia,:new.fecha_alta);
+    if v_count <> 2 then
+      raise_application_error(-20020,'Fallo fragmentación vertical LAPTOP_INVENTARIO. count='||v_count);
     end if;
 
   elsif deleting then
-    -- borramos en los 4 (debe existir solo en 1)
-    delete from laptop_inventario_f1 where laptop_id=:old.laptop_id;
-    delete from laptop_inventario_f2 where laptop_id=:old.laptop_id;
-    delete from laptop_inventario_f3 where laptop_id=:old.laptop_id;
-    delete from laptop_inventario_f4 where laptop_id=:old.laptop_id;
+    v_count := 0;
+    delete from laptop_inventario_f1 where laptop_id=:old.laptop_id; v_count := v_count + sql%rowcount;
+    delete from laptop_inventario_f2 where laptop_id=:old.laptop_id; v_count := v_count + sql%rowcount;
+
+    if v_count <> 2 then
+      raise_application_error(-20020,'No se localizaron ambas partes verticales LAPTOP_INVENTARIO. count='||v_count);
+    end if;
   end if;
 end;
 /
