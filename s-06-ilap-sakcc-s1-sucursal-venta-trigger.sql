@@ -41,7 +41,7 @@ begin
             hora_apertura, hora_cierre
         )
         select :new.sucursal_id, 
-               :new.hora_apertura, :new.horario_cierre
+               :new.hora_apertura, :new.hora_cierre
         from sucursal_f3
         where sucursal_id = :new.sucursal_id
           and es_venta = 1;
