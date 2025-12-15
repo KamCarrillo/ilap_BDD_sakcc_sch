@@ -48,26 +48,26 @@ prompt =========================================
 prompt Validando sinónimos para LAPTOP_INV
 prompt =========================================
 select
-  (select count(*) from laptop_inv_f1) as laptop_inv_f1,
-  (select count(*) from laptop_inv_f2) as laptop_inv_f2
+  (select count(*) from laptop_inventario_f1) as laptop_inv_f1,
+  (select count(*) from laptop_inventario_f2) as laptop_inv_f2
 from dual;
 
 prompt =========================================
 prompt Validando sinónimos para HISTORICO_STATUS
 prompt =========================================
 select
-  (select count(*) from hist_status_f1) as hist_status_f1,
-  (select count(*) from hist_status_f2) as hist_status_f2
+  (select count(*) from historico_status_laptop_f1) as hist_status_f1,
+  (select count(*) from historico_status_laptop_f2) as hist_status_f2
 from dual;
 
 prompt =========================================
 prompt Validando sinónimos para SERVICIO_LAPTOP
 prompt =========================================
 select
-  (select count(*) from servicio_lap_f1) as serv_lap_f1,
-  (select count(*) from servicio_lap_f2) as serv_lap_f2,
-  (select count(*) from servicio_lap_f3) as serv_lap_f3,
-  (select count(*) from servicio_lap_f4) as serv_lap_f4
+  (select count(*) from servicio_laptop_f1) as serv_lap_f1,
+  (select count(*) from servicio_laptop_f2) as serv_lap_f2,
+  (select count(*) from servicio_laptop_f3) as serv_lap_f3,
+  (select count(*) from servicio_laptop_f4) as serv_lap_f4
 from dual;
 
 prompt =========================================

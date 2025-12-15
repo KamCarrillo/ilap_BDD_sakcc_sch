@@ -1,36 +1,51 @@
---@Autor: Jorge A. Rodríguez C
---@Fecha creación: dd/mm/yyyy
---@Descripción: Eliminación y creación del usuario.
+-- s-01-ilap-usuario.sql
+-- Crea el usuario ILAP_BDD en la PDB actual.
+-- Si ya existe, lo elimina primero (DROP USER ... CASCADE).
 
+set serveroutput on
 
-Prompt Creando al usuario ilap_bdd
-drop user if exists ilap_bdd;
+prompt =====================================
+prompt Verificando y eliminando usuario ILAP_BDD (si existe)...
+prompt =====================================
 
-CREATE USER ilap_bdd IDENTIFIED BY ilap_bdd QUOTA UNLIMITED ON USERS;
+DECLARE
+  v_count PLS_INTEGER;
+BEGIN
+  SELECT COUNT(*)
+    INTO v_count
+    FROM dba_users
+   WHERE username = 'ILAP_BDD';
 
+  IF v_count > 0 THEN
+    dbms_output.put_line(' -> Usuario ILAP_BDD existe, se eliminará...');
+    EXECUTE IMMEDIATE 'DROP USER ilap_bdd CASCADE';
+    dbms_output.put_line(' -> Usuario ILAP_BDD eliminado.');
+  ELSE
+    dbms_output.put_line(' -> Usuario ILAP_BDD no existe, no se elimina nada.');
+  END IF;
+END;
+/
+prompt Listo: el usuario previo (si existía) ya fue eliminado.
 
-GRANT CREATE SESSION TO ilap_bdd;
+prompt =====================================
+prompt Creando usuario ILAP_BDD...
+prompt =====================================
 
-GRANT CREATE TABLE TO ilap_bdd;
+CREATE USER ilap_bdd
+  IDENTIFIED BY ilap_bdd
+  QUOTA UNLIMITED ON USERS;
 
-GRANT CREATE SEQUENCE TO ilap_bdd;
+GRANT CREATE SESSION   TO ilap_bdd;
+GRANT CONNECT          TO ilap_bdd;
+GRANT RESOURCE         TO ilap_bdd;
 
-GRANT CREATE PROCEDURE TO ilap_bdd;
-
-GRANT CREATE VIEW TO ilap_bdd;
-
-GRANT CREATE SYNONYM TO ilap_bdd;
-
+-- Privilegios típicos para el proyecto
+GRANT CREATE TABLE       TO ilap_bdd;
+GRANT CREATE SEQUENCE    TO ilap_bdd;
+GRANT CREATE VIEW        TO ilap_bdd;
+GRANT CREATE PROCEDURE   TO ilap_bdd;
+GRANT CREATE SYNONYM     TO ilap_bdd;
 GRANT CREATE DATABASE LINK TO ilap_bdd;
 
-grant create session to ilap_bdd;
-grant resource to ilap_bdd;
+prompt Usuario ILAP_BDD creado y con privilegios asignados.
 
--- Ya tenías: create table, view, synonym, procedure, database link, etc.
--- Agrega también:
-grant create directory to ilap_bdd;
--- o si sigues el ejemplo literal de la guía:
--- grant create any directory to ilap_bdd;
-
-
-PROMPT Permisos asignados correctamente.

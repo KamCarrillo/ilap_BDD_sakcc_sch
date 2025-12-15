@@ -1,39 +1,32 @@
--- @Autor       : Samuel Chong (SCH)
--- @Fecha       : 09/12/2025
--- @Descripción : Script principal para crear los fragmentos de iLap
---                en los nodos de SCH (Norte y Este).
+clear screen
+whenever sqlerror exit rollback;
 
-CLEAR SCREEN
-WHENEVER SQLERROR EXIT ROLLBACK;
-SET SERVEROUTPUT ON
-
-PROMPT ============================================
-PROMPT Creación de fragmentos iLap - Lado SCH
-PROMPT ============================================
-
-ACCEPT ilappass CHAR PROMPT 'Proporcione el password de ilap_bdd: ' HIDE
-
-PROMPT
 PROMPT ============================================
 PROMPT Nodo Norte (schbdd_s1 - sch_s1)
 PROMPT ============================================
-
-CONNECT ilap_bdd/&&ilappass@SCHBDD_S1
+connect ilap_bdd/ilap_bdd@schbdd_s1
 @s-03-ilap-ddl-sch-s1.sql
 
-PROMPT
 PROMPT ============================================
 PROMPT Nodo Este (schbdd_s2 - sch_s2)
 PROMPT ============================================
-
-CONNECT ilap_bdd/&&ilappass@SCHBDD_S2
+connect ilap_bdd/ilap_bdd@schbdd_s2
 @s-03-ilap-ddl-sch-s2.sql
 
-PROMPT
 PROMPT ============================================
-PROMPT Fragmentos creados correctamente (lado SCH)
+PROMPT Nodo OESTE (sakccbdd_s1 - sakcc_s2)
 PROMPT ============================================
+connect ilap_bdd/ilap_bdd@sakccbdd_s1
+@s-03-ilap-sakcc-s1-ddl.sql
+
+PROMPT ============================================
+PROMPT Nodo SUR (sakccbdd_s2 - sakcc_s2)
+PROMPT ============================================
+connect ilap_bdd/ilap_bdd@sakccbdd_s2
+@s-03-ilap-sakcc-s2-ddl.sql
+
+
+Prompt Listo!
 
 DISCONNECT
 EXIT
-
